@@ -1,4 +1,4 @@
-Unofficial Appimage built on top of the official archive.
+Unofficial Appimage of Calibre, at https://github.com/kovidgoyal/calibre, built on top of the official archive.
 
 The AppImage is created by extracting the official archive, with the only addition of a .desktop file, an icon and an AppRun (three essential elements for an AppImage).
 
