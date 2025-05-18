@@ -43,7 +43,7 @@ _appimage_basics() {
 	GenericName=E-book library management
 	Icon=calibre
 	MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document;image/vnd.djvu;application/x-mobi8-ebook;application/x-cbr;text/fb2+xml;application/pdf;application/x-cbc;application/vnd.ms-word.document.macroenabled.12;text/rtf;application/epub+zip;application/x-cbz;text/plain;application/x-sony-bbeb;application/oebps-package+xml;application/x-cb7;application/x-mobipocket-ebook;application/ereader;text/html;text/x-markdown;application/xhtml+xml;application/vnd.oasis.opendocument.text;application/x-mobipocket-subscription;x-scheme-handler/calibre;
-	Name=calibre
+	Name=Calibre
 	Type=Application
 	X-DBUS-ServiceName=
 	X-DBUS-StartupType=
@@ -64,7 +64,7 @@ _appimage_basics
 #	CREATE THE APPIMAGE
 #############################################################################
 
-APPNAME=$(cat ./"$APP".AppDir/*.desktop | grep 'Name=' | head -1 | cut -c 6- | sed 's/ /-/g')
+APPNAME=$(cat ./"$APP".AppDir/*.desktop | grep '^Name=' | head -1 | cut -c 6- | sed 's/ /-/g')
 REPO="Calibre-appimage"
 TAG="continuous"
 VERSION="$VERSION"
