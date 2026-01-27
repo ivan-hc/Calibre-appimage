@@ -44,10 +44,10 @@ jobs:
         - name: release
           uses: marvinpinto/action-automatic-releases@latest
           with:
-            title: Continuous
-            automatic_release_tag: continuous
+            title: Continuous-stable
+            automatic_release_tag: continuous-stable
             prerelease: false
             draft: false
             files: |
-              *.AppImage*
+              *stable*.AppImage*
             repo_token: ${{ secrets.GITHUB_TOKEN }}
