@@ -72,7 +72,7 @@ UPINFO="gh-releases-zsync|$GITHUB_REPOSITORY_OWNER|$REPO|$TAG|*x86_64.AppImage.z
 
 ARCH=x86_64 _appimagetool --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20 \
 	-u "$UPINFO" \
-	./"$APP".AppDir "$APPNAME"_"$VERSION"-x86_64.AppImage
+	./"$APP".AppDir "$APPNAME"-stable_"$VERSION"-x86_64.AppImage
 
 if ! test -f ./*.AppImage; then
 	echo "No AppImage available."; exit 1
