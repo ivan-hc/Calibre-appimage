@@ -14,12 +14,11 @@ for d in $dependencies; do
 done
 
 _appimagetool() {
-	if ! command -v appimagetool 1>/dev/null; then
-		[ ! -f ./appimagetool ] && curl -#Lo appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-"$ARCH".AppImage && chmod a+x ./appimagetool
-		./appimagetool "$@"
-	else
-		appimagetool "$@"
+	if ! test -f ./appimagetool; then
+		wget -q https://github.com/pkgforge-dev/appimagetool/releases/latest/download/appimagetool-x86_64-linux -O appimagetool
+		chmod a+x ./appimagetool
 	fi
+	./appimagetool "$@"
 }
 
 DOWNLOAD_PAGE=$(curl -Ls https://download.calibre-ebook.com/preview/ | tr '">< ' '\n' | grep -i x86_64 | tail -1)
@@ -53,6 +52,7 @@ _appimage_basics() {
 
 	# Icon
 	cp ./"$APP".AppDir/resources/content-server/"$APP".png ./"$APP".AppDir/"$APP".png
+	cp ./"$APP".AppDir/"$APP".png ./"$APP".AppDir/.DirIcon
 
 	# AppRun
 	printf '#!/bin/sh\nHERE="$(dirname "$(readlink -f "${0}")")"\nexec "${HERE}"/%b "$@"' "$APP" > ./"$APP".AppDir/AppRun && chmod a+x ./"$APP".AppDir/AppRun
@@ -70,9 +70,10 @@ TAG="continuous-preview"
 VERSION="$VERSION"
 UPINFO="gh-releases-zsync|$GITHUB_REPOSITORY_OWNER|$REPO|$TAG|*x86_64.AppImage.zsync"
 
-ARCH=x86_64 _appimagetool --comp zstd --mksquashfs-opt -Xcompression-level --mksquashfs-opt 20 \
+APPIMAGE_ARCH=x86_64 VERSION="$VERSION" _appimagetool \
 	-u "$UPINFO" \
-	./"$APP".AppDir "$APPNAME"-preview_"$VERSION"-x86_64.AppImage
+	-n "$APPNAME"-preview_"$VERSION"-x86_64.AppImage \
+	./"$APP".AppDir || exit 1
 
 if ! test -f ./*.AppImage; then
 	echo "No AppImage available."; exit 1
